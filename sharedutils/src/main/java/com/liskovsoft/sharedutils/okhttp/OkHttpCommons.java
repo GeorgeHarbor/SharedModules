@@ -43,7 +43,7 @@ final class OkHttpCommons {
     public static final long CONNECT_TIMEOUT_MS = 20_000;
     public static final long READ_TIMEOUT_MS = 20_000;
     public static final long WRITE_TIMEOUT_MS = 20_000;
-    public static boolean enableProfiler = true;
+    public static boolean enableProfiler = false;
 
     private OkHttpCommons() {
 
@@ -335,7 +335,8 @@ final class OkHttpCommons {
 
     private static void addLogger(OkHttpClient.Builder okBuilder) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        // Keep request timings without copying large player responses into logcat.
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         okBuilder.addInterceptor(logging);
     }
 
